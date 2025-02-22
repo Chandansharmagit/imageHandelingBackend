@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import imgehandelingbackend.imgehandelingbackend.OpenAiService.OpenAIservice;
+
 import imgehandelingbackend.imgehandelingbackend.model.ImageInfo;
 import imgehandelingbackend.imgehandelingbackend.repo.ImageInfoRepository;
 import imgehandelingbackend.imgehandelingbackend.service.ImageUploadingService;
