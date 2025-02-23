@@ -44,6 +44,12 @@ public class ImageController {
     @Value("${file.image.upload-dir}") // Inject the upload directory from application.properties
     private String uploadDir;
 
+
+    @GetMapping("/")
+    public String getHome(){
+        return "Hello backend is working";
+    }
+
     @PostMapping("/uploadMultiple")
     public ResponseEntity<?> uploadMultipleImages(
             @RequestParam("files") MultipartFile[] files,
