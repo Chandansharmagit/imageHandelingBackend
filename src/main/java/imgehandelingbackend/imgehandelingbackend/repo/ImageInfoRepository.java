@@ -12,6 +12,8 @@ public interface ImageInfoRepository extends MongoRepository<ImageInfo, String> 
 
     Optional<ImageInfo> findById(String id);
 
+    List<ImageInfo> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+
 }
 
 /*

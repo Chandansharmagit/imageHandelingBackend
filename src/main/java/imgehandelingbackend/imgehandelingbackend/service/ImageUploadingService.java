@@ -2,6 +2,7 @@ package imgehandelingbackend.imgehandelingbackend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,12 +38,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.io.*;
 
 
@@ -61,15 +59,18 @@ public class ImageUploadingService {
         return imageInfoRepository.save(imageInfo);
     }
 
-    public List<ImageInfo> getAllImages() {
-        return imageInfoRepository.findAll();
+    public Page<ImageInfo> getImages(int page) {
+        Pageable pageable = PageRequest.of(page, 15); // Fetch 15 images per request
+        return imageInfoRepository.findAll(pageable);
     }
 
     public ImageInfo getImageInfoById(String id) {
         return imageInfoRepository.findById(id).orElse(null);
     }
 
-
+    public List<ImageInfo> searchImages(String query) {
+        return imageInfoRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    }
 
 
     //comenting the code for cloudinary image storing
@@ -190,5 +191,9 @@ public class ImageUploadingService {
         }
         
         return 1.0 - (differences / (double) hash1.length());
+    }
+
+    public void deleteImageInfo(String id) {
+        imageInfoRepository.deleteById(id);
     }
 }
